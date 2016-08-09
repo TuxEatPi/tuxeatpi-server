@@ -1,0 +1,12 @@
+env
+*.swp
+*.pyc
+doc/build
+*.egg-info/
+.coverage
+htmlcov/
+nosetests.xml
+nosetests.html
+test-report/
+cover/
+tuxeatpi-conf.yml

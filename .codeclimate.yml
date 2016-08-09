@@ -1,0 +1,27 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - python
+  fixme:
+    enabled: true
+  radon:
+    enabled: true
+  checks:
+    Complexity:
+      enabled: false
+ratings:
+  paths:
+  - "**.inc"
+  - "**.js"
+  - "**.jsx"
+  - "**.module"
+  - "**.php"
+  - "**.py"
+  - "**.rb"
+exclude_paths:
+- tests/
+- doc/
+- examples/
+- tuxeatpi/experimental/

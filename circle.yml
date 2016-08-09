@@ -1,0 +1,33 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
+
+machine:
+  pre:
+    - wget https://s3.amazonaws.com/circle-downloads/circle-pyenv-python-3.5.1_1.0_amd64.deb
+    - sudo dpkg -i circle-pyenv-python-3.5.1_1.0_amd64.deb
+
+  python:
+    version: 3.5.1
+
+dependencies:
+  pre:
+    - pip install -r requirements-dev.txt --upgrade
+    - pip install -r requirements.txt --upgrade
+    - pip install codeclimate-test-reporter
+    - python setup.py install
+
+test:
+  override:
+    - pep8 --max-line-length=100 --exclude='*.pyc' --exclude=tuxeatpi_server/experimental tuxeatpi
+    - pylint --rcfile=.pylintrc -r no tuxeatpi_server
+    - coverage run --include='*/tuxeatpi_server/*' --omit='*/tuxeatpi_server/tests/*' `which nosetests` --with-html --with-xunit tuxeatpi_server tests 
+    - coverage html --include='*/tuxeatpi_server/*' --omit='*/tuxeatpi_server/tests/*'
+    - CODECLIMATE_REPO_TOKEN=${CODECLIMATE_REPO_TOKEN} codeclimate-test-reporter
+  post:
+    - mkdir -p $CIRCLE_TEST_REPORTS/xunit/
+    - cp nosetests.xml $CIRCLE_TEST_REPORTS/xunit/
+    - mkdir -p $CIRCLE_TEST_REPORTS/html/
+    - cp nosetests.html $CIRCLE_TEST_REPORTS/html/
+    - cp -r htmlcov $CIRCLE_TEST_REPORTS/coverage

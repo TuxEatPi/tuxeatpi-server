@@ -1,0 +1,11 @@
+ipdb
+pylint
+ipython
+nose
+sphinx
+sphinx-rtd-theme
+coverage
+RPi.GPIO
+https://github.com/TuxEatPi/GPIOSim/archive/master.zip
+https://github.com/TuxEatPi/tuxeatpi/archive/master.zip
+nose-htmloutput
