@@ -1,13 +1,13 @@
 """Module to interact with TuxDroid using tuxeatpi lib"""
 
-import time
-
 import hug
 from tuxeatpi.tux import Tux
 
+from tuxeatpi_server.utils import cors_support
+
 
 @hug.startup()
-def init_droid(interface_api):
+def init_droid(interface_api):  # pylint: disable=W0613
     """Wrapper to init the TuxDroid on server startup"""
     # FYI hug.API('tuxeatpi_server.server') is interface_api.api
     if "droid" not in hug.API(__name__).context:
@@ -31,7 +31,7 @@ def root():
     return str(get_droid())
 
 
-@hug.get("/name")
+@hug.get("/name", requires=cors_support)
 def name():
     """Return Tux name"""
     return get_droid().name
@@ -43,13 +43,13 @@ def wings():
     return str(get_droid().wings)
 
 
-@hug.get("/wings/position")
+@hug.get("/wings/position", requires=cors_support)
 def wings_position():
     """Return wings position"""
     return get_droid().wings.get_position()
 
 
-@hug.post("/wings/position")
+@hug.post("/wings/position", requires=cors_support)
 def wings_move(position):
     """Move Wings to a position"""
     get_droid().wings.move_to_position(position)

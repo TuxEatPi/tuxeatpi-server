@@ -1,8 +1,6 @@
 """Entrypoint file for tuxeatpi-server"""
 
 import argparse
-import re
-import sys
 
 import hug
 
@@ -44,10 +42,10 @@ def main():
     """
     read_args()
     try:
-        __hug__.http.serve()
+        __hug__.http.serve()  # pylint: disable=E0602
     except KeyboardInterrupt:
         pass
-    del(hug.API('tuxeatpi_server.droid.tux').context["droid"])
+    del hug.API('tuxeatpi_server.droid.tux').context["droid"]
 
 
 if __name__ == '__main__':
