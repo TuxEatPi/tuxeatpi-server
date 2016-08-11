@@ -15,12 +15,13 @@ dependencies:
   pre:
     - pip install -r requirements-dev.txt --upgrade
     - pip install -r requirements.txt --upgrade
+    - pip install https://github.com/TuxEatPi/tuxeatpi/archive/master.zip
     - pip install codeclimate-test-reporter
     - python setup.py install
 
 test:
   override:
-    - pep8 --max-line-length=100 --exclude='*.pyc' --exclude=tuxeatpi_server/experimental tuxeatpi
+    - pep8 --max-line-length=100 --exclude='*.pyc' --exclude=tuxeatpi_server/experimental tuxeatpi_server
     - pylint --rcfile=.pylintrc -r no tuxeatpi_server
     - coverage run --include='*/tuxeatpi_server/*' --omit='*/tuxeatpi_server/tests/*' `which nosetests` --with-html --with-xunit tuxeatpi_server tests 
     - coverage html --include='*/tuxeatpi_server/*' --omit='*/tuxeatpi_server/tests/*'

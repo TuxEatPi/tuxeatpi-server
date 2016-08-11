@@ -1,2 +1,3 @@
 PyYAML
+https://github.com/TuxEatPi/tuxeatpi/archive/master.zip
 hug
