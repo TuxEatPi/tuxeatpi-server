@@ -5,12 +5,19 @@ import argparse
 import hug
 
 from tuxeatpi_server.droid import tux
+from tuxeatpi_server import static
 
 
 @hug.get('/')
 def root():
     """Root path function"""
     return "root"
+
+
+@hug.extend_api('/static')
+def ui_routes():
+    """Import all static routes"""
+    return [static]
 
 
 @hug.extend_api('/tux')

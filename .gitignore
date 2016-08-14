@@ -10,3 +10,4 @@ nosetests.html
 test-report/
 cover/
 tuxeatpi-conf.yml
+ui/
