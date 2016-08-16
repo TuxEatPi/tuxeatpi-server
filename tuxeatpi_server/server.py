@@ -14,7 +14,7 @@ def root():
     return "root"
 
 
-@hug.extend_api('/static')
+@hug.extend_api('/ui')
 def ui_routes():
     """Import all static routes"""
     return [static]

@@ -14,3 +14,11 @@ def tuxeatpi_web():
     """
     ui_folder = os.path.join(get_main_folder(), "ui")
     return (ui_folder, )
+
+
+# Maybe this is not needed
+@hug.static("/service-worker.js")
+def tuxeatpi_web_worker():
+    """Return service-worker.js"""
+    ui_folder = os.path.join(get_main_folder(), "ui/service-worker.js")
+    return (ui_folder, )
