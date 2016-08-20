@@ -53,3 +53,9 @@ def wings_position():
 def wings_move(position):
     """Move Wings to a position"""
     get_droid().wings.move_to_position(position)
+
+
+@hug.post("/voice/tts", requires=cors_support)
+def voice_tts(text):
+    """Text to speech"""
+    get_droid().voice.tts(text)
