@@ -1,7 +1,11 @@
 """Module to interact with TuxDroid using tuxeatpi lib"""
 
+import copy
+
 import hug
 from tuxeatpi.tux import Tux
+from tuxeatpi.libs.voice import VOICES
+from tuxeatpi.libs.settings import SettingsError
 
 from tuxeatpi_server.utils import cors_support
 
@@ -34,7 +38,7 @@ def root():
 @hug.get("/name", requires=cors_support)
 def name():
     """Return Tux name"""
-    return get_droid().name
+    return get_droid().settings['global']['name']
 
 
 @hug.get("/wings")
@@ -59,3 +63,30 @@ def wings_move(position):
 def voice_tts(text):
     """Text to speech"""
     get_droid().voice.tts(text)
+
+
+@hug.get("/settings", requires=cors_support)
+def get_settings():
+    """Get Tux settings"""
+    return dict(get_droid().settings)
+
+
+@hug.post("/settings", requires=cors_support)
+def save_settings(settings):
+    """Save Tux settings"""
+    old_settings = copy.copy(get_droid().settings)
+    get_droid().settings.update(settings)
+    try:
+        get_droid().settings.save()
+        return "OK"
+        # TODO format OK
+    except SettingsError:
+        get_droid().settings = old_settings
+        return "ERROR"
+        # TODO format Error
+
+
+@hug.get("/settings/languages", requires=cors_support)
+def get_languages():
+    """Get Tux languages capabilities"""
+    return VOICES
