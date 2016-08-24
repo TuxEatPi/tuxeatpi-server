@@ -90,3 +90,9 @@ def save_settings(settings):
 def get_languages():
     """Get Tux languages capabilities"""
     return VOICES
+
+
+@hug.post("/nlu/text", requires=cors_support)
+def understand_text(text, say_it=False):
+    answer = get_droid().nlu.understand_text(text, say_it=say_it)
+    return {"answer": answer}
