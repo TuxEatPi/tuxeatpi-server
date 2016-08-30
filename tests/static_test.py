@@ -18,7 +18,7 @@ class StaticFolderTests(unittest.TestCase):
     def tearDown(self):
         """Method called after each test function"""
         hug.API('tuxeatpi_server.droid.tux').context["droid"].wings.move_stop()
-        del(hug.API('tuxeatpi_server.droid.tux').context["droid"])
+        hug.API('tuxeatpi_server.droid.tux').context["droid"].shutdown()
 
     def test_ui(self):
         """Static tests"""

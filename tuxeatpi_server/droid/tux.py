@@ -1,11 +1,8 @@
 """Module to interact with TuxDroid using tuxeatpi lib"""
 
-import copy
-
 import hug
 from tuxeatpi.tux import Tux
-from tuxeatpi.libs.voice import VOICES
-from tuxeatpi.libs.settings import SettingsError
+from tuxeatpi.voice.common import VOICES
 
 from tuxeatpi_server.utils import cors_support
 
@@ -62,7 +59,7 @@ def wings_move(position):
 @hug.post("/voice/tts", requires=cors_support)
 def voice_tts(text):
     """Text to speech"""
-    get_droid().voice.tts(text)
+    get_droid().say(text)
 
 
 @hug.get("/settings", requires=cors_support)
@@ -74,16 +71,12 @@ def get_settings():
 @hug.post("/settings", requires=cors_support)
 def save_settings(settings):
     """Save Tux settings"""
-    old_settings = copy.copy(get_droid().settings)
-    get_droid().settings.update(settings)
-    try:
-        get_droid().settings.save()
-        return "OK"
-        # TODO format OK
-    except SettingsError:
-        get_droid().settings = old_settings
-        return "ERROR"
-        # TODO format Error
+    if get_droid().update_setting(settings):
+        return get_droid().settings
+        # TODO OK
+    else:
+        return get_droid().settings
+        # TODO Error
 
 
 @hug.get("/settings/languages", requires=cors_support)
@@ -94,5 +87,6 @@ def get_languages():
 
 @hug.post("/nlu/text", requires=cors_support)
 def understand_text(text, say_it=False):
-    answer = get_droid().nlu.understand_text(text, say_it=say_it)
+    """Try to understand text (NLU)"""
+    answer = get_droid().understand_text(text, say_it=say_it)
     return {"answer": answer}
