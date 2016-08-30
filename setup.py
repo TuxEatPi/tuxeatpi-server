@@ -23,6 +23,8 @@ setup(
     include_package_data=True,
     license='Apache 2.0',
     classifiers=(
+        'Intended Audience :: End Users/Desktop',
+        'Intended Audience :: Developers',
         'Programming Language :: Python :: 3.5',
     ),
     entry_points="""

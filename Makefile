@@ -26,6 +26,14 @@ doc-generate:
 	cd doc && make html
 	touch doc/build/html/.nojekyll
 
+lang-gen:
+	# TODO find something cleaner 
+	rm -rf tuxeatpi/locale
+	mkdir -p tuxeatpi
+	cp -r `python -c "import os,tuxeatpi;print(os.path.dirname(tuxeatpi.__file__))"`/locale tuxeatpi
+	cd tuxeatpi/locale/fr/LC_MESSAGES/ && msgfmt tuxeatpi.po -o tuxeatpi.mo
+	cd tuxeatpi/locale/en/LC_MESSAGES/ && msgfmt tuxeatpi.po -o tuxeatpi.mo
+
 #######################################
 ### Test targets
 #######################################
